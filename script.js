@@ -10,7 +10,7 @@ function generateMatrix() {
 
   let numrows = document.getElementById("row").value;
   let numcols = document.getElementById("col").value;
-  console.log("matrix generated");
+  //console.log("matrix generated");
   const matrix = document.getElementById("matrix");
   const table = document.createElement("table");
   var tbdy = document.createElement('tbody');
@@ -64,7 +64,7 @@ function getMatrixInputs(numrows, numcols) {
     }
     matrix.push(row);
   }
-  console.log("Function ran")
+ // console.log("Function ran")
 
   return matrix;
 }
@@ -87,7 +87,9 @@ function parseFraction(num) {
   return num; // Invalid input
 }
 
-//TODO: Make seperate function for swap onlying doing if zero at lead
+//TODO: Make seperate function for swap onlying doing if zero at diagonal
+//TODO: Make seperate funciton to find divisor for neatness 
+//TODO: Make seperate for elementary row operations 
 
 function calculateRref() {
   let numrows = document.getElementById("row").value;
@@ -104,62 +106,99 @@ for(let s = 0; s < numrows; s++){
 
 }
 */
-  let lead = 0;
+  let diagonal = 0;
   for (let r = 0; r < numrows; r++) {
-    if (numcols <= lead) {
+    if (numcols <= diagonal) {
       break;
     }
     let i = r;
     //go to the next non zero row
-  //  console.log(matrix[i][lead]); 
-    while (matrix[i][lead] === 0) {
-      i++;
-      //console.log(matrix[i][lead]); 
-      if (i === numrows) {
-        i = r;
-        lead++;
-        if (numcols === lead) {
-          lead--;
-          break;
+  //  console.log(matrix[i][diagonal]); 
+  while (matrix[i][diagonal] === 0) {
+    //    i = (i < numrows)
+        i++;
+      //  console.log(i);
+      //  console.log(diagonal);
+        
+        //console.log(matrix[i][diagonal]); 
+        if (i === numrows) {
+          i = r;
+          diagonal++;
+          if (numcols === diagonal) {
+            diagonal--;
+            break;
+          }
         }
-      }
-    }
+}
     //swap to first non zero matrix 
     //make into another function for neatness
-     let temp = matrix[i];
-     matrix[i] = matrix[r];
-     matrix[r] = temp;
+        swapRows(matrix, i, r);
+
+    
     //divisor to use for row operations 
-    let d = matrix[r][lead];
+    console.log(diagonal);
+    console.log(r);
+    let d = matrix[r][diagonal];
   //  console.log(d);
-    //divide whole row to get 1 in the lead position 
-    for (let j = 0; j < numcols; j++) {
-     if(matrix[r][0] === 1){
-        break; 
-      }
-      else{
-        matrix[r][j] /= d;
-     //   console.log(matrix[r][j] /= d); 
-      }
-    }
-         
-      //   matrix[r][j] =(isNaN(matrix[r][j]/d) ? 0: matrix[r][j]/d);
-      
+    findDivisor(matrix, d, r, numcols);
     //Row operations to make rref
-    for (let i = 0; i < numrows; i++) {
-      if (i !== r) {
-        d = matrix[i][lead];
-            for (let j = 0; j < numcols; j++) {
-                 matrix[i][j] -= d * matrix[r][j];
-              //   console.log(matrix[i][j] -= d * matrix[r][j]); 
-             }
-        } 
+     rowOperation(matrix, diagonal, d, r, numrows, numcols); 
+     diagonal++;
     }
-    lead++;
-  }
   //display the rref matrix
   displayResult(matrix);
 }
+/*function checkDiagZero(matrix, i, numrows, diagonal, numcols){
+    while (matrix[i][diagonal] === 0) {
+        //    i = (i < numrows)
+            i++;
+          //  console.log(i);
+          //  console.log(diagonal);
+            
+            //console.log(matrix[i][diagonal]); 
+            if (i === numrows) {
+              i = r;
+              diagonal++;
+              if (numcols === diagonal) {
+                diagonal--;
+                break;
+              }
+            }
+    }
+}
+*/
+function swapRows(matrix, r, i){
+    let temp = matrix[i];
+    matrix[i] = matrix[r];
+    matrix[r] = temp;
+}
+
+function findDivisor(matrix, d, r,numcols){
+    //divide whole row to get 1 in the diagonal position 
+    for (let j = 0; j < numcols; j++) {
+        if(matrix[r][0] === 1){
+           break; 
+         }
+         else{
+          // matrix[r][j] = (isNaN(matrix[r][j] / d) ? 0 : matrix[r][j] / d);
+           matrix[r][j] /= d; 
+         }
+       }
+      //   matrix[r][j] =(isNaN(matrix[r][j]/d) ? 0: matrix[r][j]/d);                
+}
+function rowOperation(matrix, diagonal, d, r, numrows, numcols){
+    for (let i = 0; i < numrows; i++) {
+        if (i !== r) {
+          d = matrix[i][diagonal];
+              for (let j = 0; j < numcols; j++) {
+                   matrix[i][j] -= d * matrix[r][j];
+                //   console.log(matrix[i][j] -= d * matrix[r][j]); 
+               }
+          } 
+      }
+
+    }
+
 function displayResult(matrix) {
   let resultDiv = document.getElementById("result");
   resultDiv.innerHTML = ""; // Clear previous results
