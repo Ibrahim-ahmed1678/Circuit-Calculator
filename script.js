@@ -49,6 +49,7 @@ function generateMatrix() {
 
   matrix.appendChild(table);
 }
+
 function getMatrixInputs(numrows, numcols) {
 
   let matrix = [];
@@ -140,6 +141,7 @@ for(let s = 0; s < numrows; s++){
         matrix[r][j] /= d;
      //   console.log(matrix[r][j] /= d); 
       }
+    }
          
       //   matrix[r][j] =(isNaN(matrix[r][j]/d) ? 0: matrix[r][j]/d);
       
