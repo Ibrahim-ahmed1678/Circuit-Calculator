@@ -132,12 +132,10 @@ for(let s = 0; s < numrows; s++){
 }
     //swap to first non zero matrix 
     //make into another function for neatness
-        swapRows(matrix, i, r);
+     swapRows(matrix, i, r);
 
     
     //divisor to use for row operations 
-    console.log(diagonal);
-    console.log(r);
     let d = matrix[r][diagonal];
   //  console.log(d);
     findDivisor(matrix, d, r, numcols);
@@ -176,15 +174,17 @@ function swapRows(matrix, r, i){
 function findDivisor(matrix, d, r,numcols){
     //divide whole row to get 1 in the diagonal position 
     for (let j = 0; j < numcols; j++) {
-        if(matrix[r][0] === 1){
+  /*      if(matrix[r][0] === 1){
            break; 
          }
          else{
+          */
           // matrix[r][j] = (isNaN(matrix[r][j] / d) ? 0 : matrix[r][j] / d);
            matrix[r][j] /= d; 
-         }
-       }
+
+      // }
       //   matrix[r][j] =(isNaN(matrix[r][j]/d) ? 0: matrix[r][j]/d);                
+    }
 }
 function rowOperation(matrix, diagonal, d, r, numrows, numcols){
     for (let i = 0; i < numrows; i++) {
