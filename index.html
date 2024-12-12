@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Circuit Calculator</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Circuit Calculator</h1>
+  <div class="matrix_settings_wrapper">
+    <span>
+      <label for="row"> Number of Nodes/Meshes: </label>
+      <input type="number" id="row" min="1" value="2">
+    </span>
+    <span>
+      <label for="col"> Number of Voltages/Currents: </label>
+
+      <input type="number" id="col" min="1" value="3">
+
+    </span>
+    <span>
+      <label for="method"> What method are you using: </label>
+      <input type="button" id="choice1" value="Node" onclick="choice = 'v'; generateMatrix();">
+      <input type="button" id="choice2" value="Mesh" onclick="choice = 'i'; generateMatrix();">
+  </div>
+
+  <div id="matrix"></div>
+
+  <div class="matrix_results_wrapper">
+    <span><button onclick="calculateRref(); refreshButton()"> Calculate </button>
+    </span>
+    <span>
+      <h2>Result</h2>
+    </span>
+    <span>
+      <div id="result"> </div>
+      <div id="final-answers"> </div>
+      <div id="refresh"> </div>
+
+    </span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px;
+    color: white; 
+    background-color: darkslategrey;
+  }
+  h1{
+    text-align: center ;
+  }
+  
+  .matrix_settings_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 4px;
+  }
+  
+  .matrix_settings_wrapper span {
+    display: inline-flex;
+    padding: 4px;
+  }
+  
+  #matrix {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+  }
+  
+  table {
+    margin-bottom: 20px;
+  }
+  
+  td {
+    padding: 5px;
+  }
+  
+  .datawrapper {
+    display:inline-block;
+  }
+  
+  .matrix_results_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 4px;
+  }
