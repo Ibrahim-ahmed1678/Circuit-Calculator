@@ -90,17 +90,15 @@ function parseFraction(num) {
 //TODO: Make seperate function for swap onlying doing if zero at leadIndex
 //TODO: Make seperate funciton to find divisor for neatness 
 //TODO: Make seperate for elementary row operations 
-
+/*
 function calculateRref() {
     //Fetch Input values
-    let rows = parseInt(document.getElementById("row").value);
-    let cols = parseInt(document.getElementById("col").value);
-    let mat = getmatInputs(rows, cols);
+    const rows = parseInt(document.getElementById("row").value);
+    const cols = parseInt(document.getElementById("col").value);
+    const mat = getmatInputs(rows, cols);
 
   // Start with the first leading column
     let leadIndex = 0;
-  //let errormsg = document.getElementById("error");
-
 /*Testing for input validation  
 for(let s = 0; s < rows; s++){
     console.log(mat[s] + "\n");  
@@ -110,7 +108,6 @@ for(let s = 0; s < rows; s++){
 
 }
 */
-
   for (let r = 0; r < rows; r++) {
      if (leadIndex >= cols) {
         break;
@@ -133,13 +130,9 @@ for(let s = 0; s < rows; s++){
   
       //  console.log(pivotVal);
       //  console.log(leadIndex);
-        
-    //console.log(mat[pivotVal][leadIndex]); 
     //swap to first non zero mat 
     //make into another function for neatness
-    [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
-
-    
+     swapRows(mat, pivotRow, r);
     //divisor to use for row operations 
     let pivotVal = mat[r][leadIndex];
     //  console.log(d);
@@ -151,25 +144,11 @@ for(let s = 0; s < rows; s++){
   //display the rref mat
   displayResult(mat);
 }
-/*function checkDiagZero(mat, i, numrows, leadIndex, numcols){
-    while (mat[i][leadIndex] === 0) {
-        //    i = (i < numrows)
-            i++;
-          //  console.log(i);
-          //  console.log(leadIndex);
-            
-            //console.log(mat[i][leadIndex]); 
-            if (i === numrows) {
-              i = r;
-              leadIndex++;
-              if (numcols === leadIndex) {
-                leadIndex--;
-                break;
-              }
-            }
-    }
+/*
+function swapRows(mat, r, pivotRow){
+      [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
 }
-  */
+
 function divideRow(mat, pivotVal, r,cols){
     //divide whole row to get 1 in the leadIndex position 
       for (let c = 0; c < cols; c++) {              
@@ -187,6 +166,65 @@ function rowOperation(mat, leadIndex, r, rows, cols){
           }
      }
 }
+*/
+function calculateRref() {
+  // Get user input for rows and columns
+  const rows = parseInt(document.getElementById("row").value);
+  const cols = parseInt(document.getElementById("col").value);
+
+  // Fetch the matrix based on input
+  const mat = getMatrixInputs(rows, cols);
+
+  // Start with the first leading column
+  let leadIndex = 0;
+
+  for (let r = 0; r < rows; r++) {
+      if (leadIndex >= cols) {
+          break;
+      }
+
+      let pivotRow = r;
+
+      // Locate a non-zero pivot element
+      while (mat[pivotRow][leadIndex] === 0) {
+          pivotRow++;
+          if (pivotRow === rows) {
+              pivotRow = r;
+              leadIndex++;
+              if (leadIndex === cols) {
+                  leadIndex--;
+                  break;
+              }
+          }
+      }
+
+      // Swap current row with pivot row
+      [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
+
+      // Normalize the row so the pivot element becomes 1
+      const pivotVal = mat[r][leadIndex];
+      for (let c = 0; c < cols; c++) {
+          mat[r][c] /= pivotVal;
+      }
+
+      // Clear other entries in the pivot column
+      for (let otherRow = 0; otherRow < rows; otherRow++) {
+          if (otherRow !== r) {
+              const scale = mat[otherRow][leadIndex];
+              for (let c = 0; c < cols; c++) {
+                  mat[otherRow][c] -= scale * mat[r][c];
+              }
+          }
+      }
+
+      leadIndex++;
+  }
+
+  // Output the RREF matrix
+  displayResult(mat);
+}
+
+
 
 function displayResult(mat) {
   let resultDiv = document.getElementById("result");
