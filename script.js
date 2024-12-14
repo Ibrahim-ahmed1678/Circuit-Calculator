@@ -108,6 +108,7 @@ for(let s = 0; s < rows; s++){
 
 }
 */
+/*
   for (let r = 0; r < rows; r++) {
      if (leadIndex >= cols) {
         break;
@@ -127,22 +128,22 @@ for(let s = 0; s < rows; s++){
         }
     }
 }
-  
+  */
       //  console.log(pivotVal);
       //  console.log(leadIndex);
     //swap to first non zero mat 
     //make into another function for neatness
-     swapRows(mat, pivotRow, r);
+   //  swapRows(mat, pivotRow, r);
     //divisor to use for row operations 
-    let pivotVal = mat[r][leadIndex];
+   // let pivotVal = mat[r][leadIndex];
     //  console.log(d);
-    divideRow(mat, pivotVal, r, cols);
+  //  divideRow(mat, pivotVal, r, cols);
     //Row operations to make rref
-     rowOperation(mat, leadIndex, pivotVal, r, rows, cols); 
-     leadIndex++;
-    }
+   //  rowOperation(mat, leadIndex, pivotVal, r, rows, cols); 
+   //  leadIndex++;
+  //  }
   //display the rref mat
-  displayResult(mat);
+ // displayResult(mat);
 //}
 /*
 function swapRows(mat, r, pivotRow){
