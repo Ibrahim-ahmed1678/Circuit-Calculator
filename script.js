@@ -178,17 +178,7 @@ function swapRows(mat, r, pivotRow){
 function divideRow(mat, pivotVal, r,cols){
     //divide whole row to get 1 in the leadIndex position 
 
-      for (let c = 0; c < cols; c++) {
-        //      if(mat[r][0] === 1){
-         //  break; 
-      //   }
-       //  else{
-          
-          // mat[r][j] = (isNaN(mat[r][c] / pivotVal) ? 0 : mat[r][c] / pivotVal);
-          // mat[r][j] /= d; 
-
-      // }
-      //   mat[r][c] =(isNaN(mat[r][c]/pivotVal) ? 0: mat[r][c]/pivotVal);                
+      for (let c = 0; c < cols; c++) {              
        mat[r][c] /= pivotVal;
       }
           
