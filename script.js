@@ -50,7 +50,7 @@ function generateMatrix() {
   mat.appendChild(table);
 }
 
-function getmatInputs(numrows, numcols) {
+function getMatrixInputs(numrows, numcols) {
 
   let mat = [];
   for (let i = 0; i < numrows; i++) {
