@@ -87,7 +87,7 @@ function parseFraction(num) {
   return num; // Invalid input
 }
 
-//TODO: Make seperate function for swap onlying doing if zero at diagonal
+//TODO: Make seperate function for swap onlying doing if zero at leadIndex
 //TODO: Make seperate funciton to find divisor for neatness 
 //TODO: Make seperate for elementary row operations 
 
@@ -146,24 +146,24 @@ for(let s = 0; s < rows; s++){
     divideRow(mat, pivotVal, r, cols);
     //Row operations to make rref
      rowOperation(mat, leadIndex, pivotVal, r, rows, cols); 
-     diagonal++;
+     leadIndex++;
     }
   //display the rref matrix
   displayResult(mat);
 }
-/*function checkDiagZero(matrix, i, numrows, diagonal, numcols){
-    while (matrix[i][diagonal] === 0) {
+/*function checkDiagZero(matrix, i, numrows, leadIndex, numcols){
+    while (matrix[i][leadIndex] === 0) {
         //    i = (i < numrows)
             i++;
           //  console.log(i);
-          //  console.log(diagonal);
+          //  console.log(leadIndex);
             
-            //console.log(matrix[i][diagonal]); 
+            //console.log(matrix[i][leadIndex]); 
             if (i === numrows) {
               i = r;
-              diagonal++;
-              if (numcols === diagonal) {
-                diagonal--;
+              leadIndex++;
+              if (numcols === leadIndex) {
+                leadIndex--;
                 break;
               }
             }
@@ -176,7 +176,7 @@ function swapRows(mat, r, pivotRow){
 }
 
 function divideRow(mat, pivotVal, r,cols){
-    //divide whole row to get 1 in the diagonal position 
+    //divide whole row to get 1 in the leadIndex position 
 
       for (let c = 0; c < cols; c++) {
         //      if(mat[r][0] === 1){
