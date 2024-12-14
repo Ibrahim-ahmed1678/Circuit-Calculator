@@ -6,7 +6,7 @@ RREF functions
 
 var choice = "";
 
-function generateMat() {
+function generateMatrix() {
 
   let numrows = document.getElementById("row").value;
   let numcols = document.getElementById("col").value;
