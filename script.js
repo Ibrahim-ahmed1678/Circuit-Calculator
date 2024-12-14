@@ -146,6 +146,7 @@ for(let s = 0; s < rows; s++){
  // displayResult(mat);
 //}
 /*
+//
 function swapRows(mat, r, pivotRow){
       [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
 }
