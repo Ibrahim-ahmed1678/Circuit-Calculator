@@ -137,7 +137,7 @@ for(let s = 0; s < rows; s++){
     //console.log(mat[pivotVal][leadIndex]); 
     //swap to first non zero mat 
     //make into another function for neatness
-     swapRows(mat, pivotRow, r);
+    [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
 
     
     //divisor to use for row operations 
@@ -170,14 +170,8 @@ for(let s = 0; s < rows; s++){
     }
 }
   */
-
-function swapRows(mat, r, pivotRow){
-      [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
-}
-
 function divideRow(mat, pivotVal, r,cols){
     //divide whole row to get 1 in the leadIndex position 
-
       for (let c = 0; c < cols; c++) {              
        mat[r][c] /= pivotVal;
       }
