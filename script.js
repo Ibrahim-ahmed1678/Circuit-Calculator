@@ -6,16 +6,16 @@ RREF functions
 
 var choice = "";
 
-function generateMatrix() {
+function generatemat() {
 
   let numrows = document.getElementById("row").value;
   let numcols = document.getElementById("col").value;
-  //console.log("matrix generated");
-  const matrix = document.getElementById("matrix");
+  //console.log("mat generated");
+  const mat = document.getElementById("matrix");
   const table = document.createElement("table");
   var tbdy = document.createElement('tbody');
 
-  matrix.innerHTML = "";
+  mat.innerHTML = "";
 
   for (let i = 0; i < numrows; i++) {
     var row = document.createElement("tr");
@@ -47,12 +47,12 @@ function generateMatrix() {
   }
   table.appendChild(tbdy);
 
-  matrix.appendChild(table);
+  mat.appendChild(table);
 }
 
-function getMatrixInputs(numrows, numcols) {
+function getmatInputs(numrows, numcols) {
 
-  let matrix = [];
+  let mat = [];
   for (let i = 0; i < numrows; i++) {
     let row = [];
     for (let j = 0; j < numcols; j++) {
@@ -62,11 +62,11 @@ function getMatrixInputs(numrows, numcols) {
       //pushes zero if value is undefined to the row array 
       row.push(parseFloat(isNaN(value) ? 0 : value));
     }
-    matrix.push(row);
+    mat.push(row);
   }
  // console.log("Function ran")
 
-  return matrix;
+  return mat;
 }
 
 //function to convert fraction char '/' to decimal value
@@ -95,7 +95,7 @@ function calculateRref() {
     //Fetch Input values
     let rows = parseInt(document.getElementById("row").value);
     let cols = parseInt(document.getElementById("col").value);
-    let mat = getMatrixInputs(rows, cols);
+    let mat = getmatInputs(rows, cols);
 
   // Start with the first leading column
     let leadIndex = 0;
@@ -135,7 +135,7 @@ for(let s = 0; s < rows; s++){
       //  console.log(leadIndex);
         
     //console.log(mat[pivotVal][leadIndex]); 
-    //swap to first non zero matrix 
+    //swap to first non zero mat 
     //make into another function for neatness
      swapRows(mat, pivotRow, r);
 
@@ -148,17 +148,17 @@ for(let s = 0; s < rows; s++){
      rowOperation(mat, leadIndex, pivotVal, r, rows, cols); 
      leadIndex++;
     }
-  //display the rref matrix
+  //display the rref mat
   displayResult(mat);
 }
-/*function checkDiagZero(matrix, i, numrows, leadIndex, numcols){
-    while (matrix[i][leadIndex] === 0) {
+/*function checkDiagZero(mat, i, numrows, leadIndex, numcols){
+    while (mat[i][leadIndex] === 0) {
         //    i = (i < numrows)
             i++;
           //  console.log(i);
           //  console.log(leadIndex);
             
-            //console.log(matrix[i][leadIndex]); 
+            //console.log(mat[i][leadIndex]); 
             if (i === numrows) {
               i = r;
               leadIndex++;
@@ -185,7 +185,7 @@ function divideRow(mat, pivotVal, r,cols){
        //  else{
           
           // mat[r][j] = (isNaN(mat[r][c] / pivotVal) ? 0 : mat[r][c] / pivotVal);
-          // matrix[r][j] /= d; 
+          // mat[r][j] /= d; 
 
       // }
       //   mat[r][c] =(isNaN(mat[r][c]/pivotVal) ? 0: mat[r][c]/pivotVal);                
@@ -210,7 +210,7 @@ function displayResult(mat) {
 
   let table = document.createElement("table");
   //loops through any array, executing a provided function once for each array element in ascending index order
-  matrix.forEach(row => {
+  mat.forEach(row => {
     let tr = document.createElement("tr");
     row.forEach(value => {
       let td = document.createElement("td");
@@ -222,19 +222,19 @@ function displayResult(mat) {
 
   resultDiv.appendChild(table);
 
-  getFinalAnswers(matrix);
+  getFinalAnswers(mat);
 
 }
 
 
-function getFinalAnswers(matrix) {
+function getFinalAnswers(mat) {
   const numcols = document.getElementById("col").value
 
   let finalAnswersDiv = document.getElementById("final-answers");
   finalAnswersDiv.innerHTML = ""; // Clear previous results
-  for (let i = 0; i < matrix.length; i++) {
+  for (let i = 0; i < mat.length; i++) {
     let answer = document.createElement("p");
-    answer.innerHTML = choice + (i + 1) + " = " + matrix[i][numcols - 1].toFixed(2);
+    answer.innerHTML = choice + (i + 1) + " = " + mat[i][numcols - 1].toFixed(2);
     finalAnswersDiv.appendChild(answer);
   }
 }
