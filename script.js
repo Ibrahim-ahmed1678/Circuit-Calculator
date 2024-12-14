@@ -91,60 +91,65 @@ function parseFraction(num) {
 //TODO: Make seperate funciton to find divisor for neatness 
 //TODO: Make seperate for elementary row operations 
 
-/*function calculateRref() {
-  let numrows = document.getElementById("row").value;
-  let numcols = document.getElementById("col").value;
-  let matrix = getMatrixInputs(numrows, numcols);
+function calculateRref() {
+    //Fetch Input values
+    let rows = parseInt(document.getElementById("row").value);
+    let cols = parseInt(document.getElementById("col").value);
+    let mat = getMatrixInputs(rows, cols);
+
+  // Start with the first leading column
+    let leadIndex = 0;
   //let errormsg = document.getElementById("error");
 
-///Testing for input validation  
-for(let s = 0; s < numrows; s++){
-    console.log(matrix[s] + "\n");  
-    for(let m = 0; m < numcols; m++) {
-        console.log(typeof matrix[s][m]);
+/*Testing for input validation  
+for(let s = 0; s < rows; s++){
+    console.log(mat[s] + "\n");  
+    for(let m = 0; m < cols; m++) {
+        console.log(typeof mat[s][m]);
     }
 
 }
+*/
 
-  let diagonal = 0;
-  for (let r = 0; r < numrows; r++) {
-    if (numcols <= diagonal) {
-      break;
+  for (let r = 0; r < rows; r++) {
+     if (leadIndex >= cols) {
+        break;
     }
-    let i = r;
+
+    let pivotRow = r;
     //go to the next non zero row
-  //  console.log(matrix[i][diagonal]); 
-  while (matrix[i][diagonal] === 0) {
-    //    i = (i < numrows)
-        i++;
-      //  console.log(i);
-      //  console.log(diagonal);
-        
-        //console.log(matrix[i][diagonal]); 
-        if (i === numrows) {
-          i = r;
-          diagonal++;
-          if (numcols === diagonal) {
-            diagonal--;
+  //  console.log(mat[pivotRow][leadIndex]); 
+  while (mat[pivotRow][leadIndex] === 0) {
+    pivotRow++;
+    if (pivotRow === rows) {
+        pivotRow = r;
+        leadIndex++;
+        if (leadIndex === cols) {
+            leadIndex--;
             break;
-          }
         }
+    }
 }
+  
+      //  console.log(pivotVal);
+      //  console.log(leadIndex);
+        
+    //console.log(mat[pivotVal][leadIndex]); 
     //swap to first non zero matrix 
     //make into another function for neatness
-     swapRows(matrix, i, r);
+     swapRows(mat, pivotRow, r);
 
     
     //divisor to use for row operations 
-    let d = matrix[r][diagonal];
-  //  console.log(d);
-    findDivisor(matrix, d, r, numcols);
+    let pivotVal = mat[r][leadIndex];
+    //  console.log(d);
+    divideRow(mat, pivotVal, r, cols);
     //Row operations to make rref
-     rowOperation(matrix, diagonal, d, r, numrows, numcols); 
+     rowOperation(mat, leadIndex, pivotVal, r, rows, cols); 
      diagonal++;
     }
   //display the rref matrix
-  displayResult(matrix);
+  displayResult(mat);
 }
 /*function checkDiagZero(matrix, i, numrows, diagonal, numcols){
     while (matrix[i][diagonal] === 0) {
@@ -164,101 +169,42 @@ for(let s = 0; s < numrows; s++){
             }
     }
 }
+  */
 
-function swapRows(matrix, r, i){
-    let temp = matrix[i];
-    matrix[i] = matrix[r];
-    matrix[r] = temp;
+function swapRows(mat, r, pivotRow){
+      [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
 }
 
-function findDivisor(matrix, d, r,numcols){
+function divideRow(mat, pivotVal, r,cols){
     //divide whole row to get 1 in the diagonal position 
-    for (let j = 0; j < numcols; j++) {
-        if(matrix[r][0] === 1){
-           break; 
-         }
-         else{
+
+      for (let c = 0; c < cols; c++) {
+        //      if(mat[r][0] === 1){
+         //  break; 
+      //   }
+       //  else{
           
-          // matrix[r][j] = (isNaN(matrix[r][j] / d) ? 0 : matrix[r][j] / d);
-           matrix[r][j] /= d; 
+          // mat[r][j] = (isNaN(mat[r][c] / pivotVal) ? 0 : mat[r][c] / pivotVal);
+          // matrix[r][j] /= d; 
 
       // }
-      //   matrix[r][j] =(isNaN(matrix[r][j]/d) ? 0: matrix[r][j]/d);                
-    }
+      //   mat[r][c] =(isNaN(mat[r][c]/pivotVal) ? 0: mat[r][c]/pivotVal);                
+       mat[r][c] /= pivotVal;
+      }
+          
 }
-function rowOperation(matrix, diagonal, d, r, numrows, numcols){
-    for (let i = 0; i < numrows; i++) {
-        if (i !== r) {
-          d = matrix[i][diagonal];
-              for (let j = 0; j < numcols; j++) {
-                   matrix[i][j] -= d * matrix[r][j];
-                //   console.log(matrix[i][j] -= d * matrix[r][j]); 
-               }
-          } 
-      }
-
-    }
-*/
-function calculateRref() {
-  // Get user input for rows and columns
-  const rows = parseInt(document.getElementById("row").value);
-  const cols = parseInt(document.getElementById("col").value);
-
-  // Fetch the matrix based on input
-  const mat = getMatrixInputs(rows, cols);
-
-  // Start with the first leading column
-  let leadIndex = 0;
-
-  for (let r = 0; r < rows; r++) {
-      if (leadIndex >= cols) {
-          break;
-      }
-
-      let pivotRow = r;
-
-      // Locate a non-zero pivot element
-      while (mat[pivotRow][leadIndex] === 0) {
-          pivotRow++;
-          if (pivotRow === rows) {
-              pivotRow = r;
-              leadIndex++;
-              if (leadIndex === cols) {
-                  leadIndex--;
-                  break;
-              }
-          }
-      }
-
-      // Swap current row with pivot row
-      [mat[pivotRow], mat[r]] = [mat[r], mat[pivotRow]];
-
-      // Normalize the row so the pivot element becomes 1
-      const pivotVal = mat[r][leadIndex];
-      for (let c = 0; c < cols; c++) {
-          mat[r][c] /= pivotVal;
-      }
-
-      // Clear other entries in the pivot column
-      for (let otherRow = 0; otherRow < rows; otherRow++) {
+function rowOperation(mat, leadIndex, r, rows, cols){
+ for (let otherRow = 0; otherRow < rows; otherRow++) {
           if (otherRow !== r) {
               const scale = mat[otherRow][leadIndex];
               for (let c = 0; c < cols; c++) {
                   mat[otherRow][c] -= scale * mat[r][c];
               }
           }
-      }
-
-      leadIndex++;
-  }
-
-  // Output the RREF matrix
-  displayResult(mat);
+     }
 }
 
-
-
-function displayResult(matrix) {
+function displayResult(mat) {
   let resultDiv = document.getElementById("result");
   resultDiv.innerHTML = ""; // Clear previous results
 
